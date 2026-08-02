@@ -42,7 +42,7 @@ async function getVmReport(): Promise<Partial<ServerSnapshot>> {
   }
 
   try {
-    const response = await fetch(vmStatusUrl, { next: { revalidate: 60 } });
+    const response = await fetch(vmStatusUrl, { next: { revalidate: 15 } });
     if (!response.ok) {
       console.error('VM status report request failed', await response.text());
       return { uptime: '—', ping: '—' };
@@ -76,7 +76,7 @@ export async function getServerStatus(): Promise<ServerSnapshot> {
   try {
     const response = await fetch(
       `https://api.mcstatus.io/v2/status/java/${encodeURIComponent(`${host}:${port}`)}`,
-      { next: { revalidate: 60 } }
+      { next: { revalidate: 15 } }
     );
 
     if (!response.ok) {
