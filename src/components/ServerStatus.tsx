@@ -74,8 +74,8 @@ export function ServerStatus({ initialData }: { initialData: ServerSnapshot }) {
           className="h-16 w-16 rounded-xl shadow-lg shadow-cyan-500/20 animate-float"
         />
       </div>
-      <div className="mb-4 flex items-center justify-end">
-        <span className="text-xs text-slate-500">
+      <div className="mb-4 flex items-center justify-start">
+        <span className="text-xs text-slate-400">
           {loading ? 'Refreshing...' : lastUpdated ? `Updated ${lastUpdated.toLocaleTimeString()}` : ''}
         </span>
       </div>
