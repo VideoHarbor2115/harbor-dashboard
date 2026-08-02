@@ -67,7 +67,7 @@ export function ServerStatus({ initialData }: { initialData: ServerSnapshot }) {
   return (
     <>
       {/* Logo in corner */}
-      <div className="absolute right-6 top-6 animate-[fadeIn_0.5s_ease-out]">
+      <div className="absolute left-6 top-6 animate-[fadeIn_0.5s_ease-out]">
         <img 
           src="/logo.png" 
           alt="HarborMC" 
