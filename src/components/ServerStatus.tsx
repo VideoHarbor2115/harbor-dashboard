@@ -14,8 +14,9 @@ type ServerSnapshot = {
 
 export function ServerStatus({ initialData }: { initialData: ServerSnapshot }) {
   const [data, setData] = useState<ServerSnapshot>(initialData);
-  const [loading, setLoading] = useState(false);
+  const [loading, setLoading] = useState(true);
   const [lastUpdated, setLastUpdated] = useState<Date | null>(null);
+  const [isVisible, setIsVisible] = useState(false);
 
   const fetchStatus = async () => {
     setLoading(true);
@@ -31,21 +32,55 @@ export function ServerStatus({ initialData }: { initialData: ServerSnapshot }) {
     }
   };
 
+  // Initial load with animation
+  useEffect(() => {
+    fetchStatus().then(() => setIsVisible(true));
+  }, []);
+
   // Poll every 30 seconds
   useEffect(() => {
-    fetchStatus(); // Initial fetch
     const interval = setInterval(fetchStatus, 30000);
     return () => clearInterval(interval);
   }, []);
 
+  // Loading screen
+  if (loading && !lastUpdated) {
+    return (
+      <div className="flex min-h-[60vh] flex-col items-center justify-center">
+        <div className="animate-pulse">
+          <img 
+            src="/logo.png" 
+            alt="HarborMC" 
+            className="h-24 w-24 rounded-2xl"
+          />
+        </div>
+        <div className="mt-6 flex items-center gap-2">
+          <div className="h-2 w-2 animate-bounce rounded-full bg-cyan-400" style={{ animationDelay: '0ms' }} />
+          <div className="h-2 w-2 animate-bounce rounded-full bg-cyan-400" style={{ animationDelay: '150ms' }} />
+          <div className="h-2 w-2 animate-bounce rounded-full bg-cyan-400" style={{ animationDelay: '300ms' }} />
+        </div>
+        <p className="mt-4 text-sm text-slate-400">Loading harbor status...</p>
+      </div>
+    );
+  }
+
   return (
     <>
+      {/* Logo in corner */}
+      <div className="absolute right-6 top-6 animate-[fadeIn_0.5s_ease-out]">
+        <img 
+          src="/logo.png" 
+          alt="HarborMC" 
+          className="h-16 w-16 rounded-xl shadow-lg shadow-cyan-500/20 animate-float"
+        />
+      </div>
       <div className="mb-4 flex items-center justify-end">
         <span className="text-xs text-slate-500">
           {loading ? 'Refreshing...' : lastUpdated ? `Updated ${lastUpdated.toLocaleTimeString()}` : ''}
         </span>
       </div>
 
+      <div className={`transition-all duration-500 ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'}`}>
       <div className="mb-8 flex flex-col gap-4 md:flex-row md:items-end md:justify-between">
         <div>
           <p className="text-sm uppercase tracking-[0.35em] text-cyan-300">Harbor Dashboard</p>
@@ -91,6 +126,7 @@ export function ServerStatus({ initialData }: { initialData: ServerSnapshot }) {
           </form>
         </div>
       </section>
+      </div>
     </>
   );
 }
