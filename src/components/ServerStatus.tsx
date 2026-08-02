@@ -67,7 +67,7 @@ export function ServerStatus({ initialData }: { initialData: ServerSnapshot }) {
   return (
     <>
       {/* Logo in corner */}
-      <div className="absolute left-6 top-6 animate-[fadeIn_0.5s_ease-out]">
+      <div className="absolute right-6 top-6 animate-[fadeIn_0.5s_ease-out]">
         <img 
           src="/logo.png" 
           alt="HarborMC" 
@@ -90,8 +90,8 @@ export function ServerStatus({ initialData }: { initialData: ServerSnapshot }) {
         <div
           className={`rounded-2xl border px-5 py-3 text-sm ${
             data.status === 'online'
-              ? 'border-emerald-400/30 bg-emerald-500/10 text-emerald-200'
-              : 'border-red-400/30 bg-red-500/10 text-red-200'
+              ? 'border-teal-400/40 bg-teal-900/40 text-teal-200'
+              : 'border-red-400/40 bg-red-900/40 text-red-200'
           }`}
         >
           {data.status === 'online' ? 'Server online' : 'Server offline'}
@@ -105,25 +105,37 @@ export function ServerStatus({ initialData }: { initialData: ServerSnapshot }) {
         <StatCard label="Uptime" value={data.uptime ?? '—'} accent="emerald" />
       </section>
 
-      <section className="mt-6 grid gap-4 lg:grid-cols-[1.2fr_0.8fr]">
-        <div className="rounded-2xl border border-white/10 bg-slate-900/70 p-5">
+      <section className="mt-6 grid gap-4 lg:grid-cols-3">
+        <div className="rounded-2xl border border-cyan-300/20 bg-cyan-900/30 p-5">
           <h2 className="text-lg font-semibold text-white">Server Overview</h2>
           <div className="mt-4 grid gap-3 sm:grid-cols-2">
             <InfoRow label="Domain" value={data.domain ?? '—'} />
             <InfoRow label="Ping" value={data.ping ?? '—'} />
             <InfoRow label="Status" value={data.status ?? '—'} />
-            <InfoRow label="Boot notification" value="Action available" />
+            <InfoRow label="Discord" value="Click to join" link="https://discord.gg/juNs35nM5z" />
           </div>
         </div>
 
-        <div className="rounded-2xl border border-cyan-300/20 bg-gradient-to-br from-cyan-500/10 to-blue-500/10 p-5">
-          <h2 className="text-lg font-semibold text-white">Secure control</h2>
-          <p className="mt-2 text-sm text-slate-300">The site keeps sensitive credentials on the server and exposes only safe status data publicly.</p>
-          <form action="/api/notify-bootup" method="post" className="mt-4">
-            <button className="rounded-xl bg-cyan-400 px-4 py-2 font-semibold text-slate-950 transition hover:bg-cyan-300">
-              Notify bootup
-            </button>
-          </form>
+        <div className="rounded-2xl border border-cyan-300/20 bg-cyan-900/30 p-5">
+          <h2 className="text-lg font-semibold text-white">Server Description</h2>
+          <p className="mt-3 text-sm text-cyan-100">
+            A welcoming Minecraft server community on Falix hosting. 
+            Join us for survival, building, and fun events. 
+            Java and Bedrock players welcome!
+          </p>
+        </div>
+
+        <div className="rounded-2xl border border-cyan-300/20 bg-gradient-to-br from-cyan-500/20 to-blue-500/20 p-5">
+          <h2 className="text-lg font-semibold text-white">Start the Server</h2>
+          <p className="mt-2 text-sm text-cyan-100">Server offline? Click to DM me on Discord to start it up.</p>
+          <a 
+            href="https://discord.gg/juNs35nM5z" 
+            target="_blank" 
+            rel="noopener noreferrer"
+            className="mt-4 block rounded-xl bg-cyan-400 px-4 py-2 text-center font-semibold text-slate-950 transition hover:bg-cyan-300"
+          >
+            Join Discord
+          </a>
         </div>
       </section>
       </div>
@@ -133,25 +145,44 @@ export function ServerStatus({ initialData }: { initialData: ServerSnapshot }) {
 
 function StatCard({ label, value, accent }: { label: string; value: string; accent: string }) {
   const accentMap: Record<string, string> = {
-    cyan: 'border-cyan-300/30 bg-cyan-500/10 text-cyan-100',
-    blue: 'border-blue-300/30 bg-blue-500/10 text-blue-100',
-    amber: 'border-amber-300/30 bg-amber-500/10 text-amber-100',
-    emerald: 'border-emerald-300/30 bg-emerald-500/10 text-emerald-100',
+    cyan: 'border-cyan-300/40 bg-cyan-900/30 text-cyan-100',
+    blue: 'border-sky-300/40 bg-sky-900/30 text-sky-100',
+    amber: 'border-amber-300/40 bg-amber-900/30 text-amber-100',
+    emerald: 'border-teal-300/40 bg-teal-900/30 text-teal-100',
   };
 
   return (
     <div className={`rounded-2xl border p-4 ${accentMap[accent]}`}>
-      <div className="text-sm text-slate-300">{label}</div>
-      <div className="mt-2 text-2xl font-bold">{value}</div>
+      <div className="text-sm text-cyan-200">{label}</div>
+      <div className="mt-2 text-2xl font-bold text-white">{value}</div>
     </div>
   );
 }
 
-function InfoRow({ label, value }: { label: string; value: string }) {
-  return (
-    <div className="rounded-xl border border-white/10 bg-slate-800/70 px-3 py-2">
-      <div className="text-xs uppercase tracking-[0.24em] text-slate-400">{label}</div>
+function InfoRow({ label, value, link }: { label: string; value: string; link?: string }) {
+  const content = (
+    <>
+      <div className="text-xs uppercase tracking-[0.24em] text-cyan-300">{label}</div>
       <div className="mt-1 text-sm font-medium text-white">{value}</div>
+    </>
+  );
+
+  if (link) {
+    return (
+      <a 
+        href={link} 
+        target="_blank" 
+        rel="noopener noreferrer"
+        className="rounded-xl border border-cyan-300/20 bg-cyan-900/30 px-3 py-2 transition hover:bg-cyan-800/40"
+      >
+        {content}
+      </a>
+    );
+  }
+
+  return (
+    <div className="rounded-xl border border-cyan-300/10 bg-cyan-900/20 px-3 py-2">
+      {content}
     </div>
   );
 }
