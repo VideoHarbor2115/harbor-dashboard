@@ -123,7 +123,7 @@ export function ServerStatus({ initialData }: { initialData: ServerSnapshot }) {
           <h2 className="text-lg font-semibold text-white">About HarborMC</h2>
           <div className="mt-3 space-y-2 text-sm text-cyan-100">
             <p>⚓ <strong>Welcome to HarborMC!</strong></p>
-            <p>HarborMC is a community-focused survival server where your adventure is yours to create. Build thriving towns, explore a massive world, trade with other players, and forge lasting friendships. Whether you're a seasoned builder, fearless explorer, redstone engineer, or casual player, there's a place for you in our harbor.</p>
+            <p>HarborMC is a community-focused survival server where your adventure is yours to create. Build thriving towns, explore a massive world, trade with other players, and forge lasting friendships. Whether you&apos;re a seasoned builder, fearless explorer, redstone engineer, or casual player, there&apos;s a place for you in our harbor.</p>
             <p>We strive to provide a fair, welcoming experience with an active staff team, a balanced economy, Java & Bedrock crossplay, and regular improvements driven by community feedback.</p>
             <p>Drop anchor, gather your crew, and begin your journey. Every legend starts somewhere.</p>
           </div>
