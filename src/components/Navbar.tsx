@@ -68,7 +68,7 @@ export default function Navbar() {
         />
       )}
 
-      <nav className="relative z-50 mb-8 flex items-center justify-between rounded-2xl border border-cyan-400/20 bg-cyan-950/40 px-5 py-3 backdrop-blur">
+      <nav className="glass-card relative z-50 mb-8 flex items-center justify-between rounded-2xl px-5 py-3">
         {/* Brand */}
         <Link href="/" className="flex items-center gap-3 group" onClick={() => setMenuOpen(false)}>
           <img

@@ -1,6 +1,7 @@
 'use client';
 
 import Navbar from '@/components/Navbar';
+import SeaBackground from '@/components/SeaBackground';
 
 const SectionTitle = ({ children }: { children: React.ReactNode }) => (
   <h2 className="mt-10 mb-4 text-2xl font-bold text-cyan-300 border-b border-cyan-400/20 pb-2">{children}</h2>
@@ -16,12 +17,11 @@ const SubSection = ({ emoji, title, children }: { emoji: string; title: string; 
 export default function Rules() {
   return (
     <main className="relative min-h-screen overflow-hidden px-4 py-8 text-slate-100">
-      {/* Sea background */}
-      <div className="sea-bg pointer-events-none absolute inset-0 -z-10" />
+      <SeaBackground />
 
       <Navbar />
 
-      <div className="mx-auto max-w-3xl rounded-3xl border border-cyan-400/30 bg-cyan-950/50 p-8 shadow-2xl shadow-cyan-900/30 backdrop-blur">
+      <div className="mx-auto max-w-3xl glass-card rounded-3xl p-8">
         {/* Header */}
         <div className="mb-8 text-center">
           <h1 className="text-4xl font-bold text-white">⚓ HarborMC | Captain&apos;s Code</h1>

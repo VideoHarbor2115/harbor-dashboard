@@ -1,24 +1,23 @@
 'use client';
 
 import Navbar from '@/components/Navbar';
+import SeaBackground from '@/components/SeaBackground';
 
 export default function Social() {
   return (
     <main className="relative min-h-screen overflow-hidden px-4 py-8 text-slate-100">
-      {/* Sea background animations */}
-      <div className="sea-bg pointer-events-none absolute inset-0 -z-10" />
-      
+      <SeaBackground />
       <Navbar />
       
       <div className="mx-auto max-w-4xl">
-        <h1 className="mb-8 text-4xl font-bold text-white">Follow Us</h1>
+        <h1 className="mb-8 text-4xl font-bold text-white text-glow">Follow Us</h1>
         
         <div className="grid gap-4 md:grid-cols-2">
           <a 
             href="https://discord.gg/juNs35nM5z" 
             target="_blank" 
             rel="noopener noreferrer"
-            className="group rounded-2xl border border-indigo-400/30 bg-indigo-900/30 p-6 transition hover:bg-indigo-800/40 hover:border-indigo-400/50"
+            className="group glass-card rounded-2xl p-6"
           >
             <div className="text-3xl mb-3">💬</div>
             <h2 className="text-xl font-semibold text-white group-hover:text-indigo-200 transition">Discord</h2>
@@ -29,7 +28,7 @@ export default function Social() {
             href="#" 
             target="_blank" 
             rel="noopener noreferrer"
-            className="group rounded-2xl border border-red-400/30 bg-red-900/30 p-6 transition hover:bg-red-800/40 hover:border-red-400/50"
+            className="group glass-card rounded-2xl p-6"
           >
             <div className="text-3xl mb-3">▶️</div>
             <h2 className="text-xl font-semibold text-white group-hover:text-red-200 transition">YouTube</h2>
@@ -40,7 +39,7 @@ export default function Social() {
             href="#" 
             target="_blank" 
             rel="noopener noreferrer"
-            className="group rounded-2xl border border-sky-400/30 bg-sky-900/30 p-6 transition hover:bg-sky-800/40 hover:border-sky-400/50"
+            className="group glass-card rounded-2xl p-6"
           >
             <div className="text-3xl mb-3">🐦</div>
             <h2 className="text-xl font-semibold text-white group-hover:text-sky-200 transition">Twitter / X</h2>
@@ -51,7 +50,7 @@ export default function Social() {
             href="#" 
             target="_blank" 
             rel="noopener noreferrer"
-            className="group rounded-2xl border border-pink-400/30 bg-pink-900/30 p-6 transition hover:bg-pink-800/40 hover:border-pink-400/50"
+            className="group glass-card rounded-2xl p-6"
           >
             <div className="text-3xl mb-3">📸</div>
             <h2 className="text-xl font-semibold text-white group-hover:text-pink-200 transition">Instagram</h2>

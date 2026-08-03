@@ -1,6 +1,7 @@
 'use client';
 
 import Navbar from '@/components/Navbar';
+import SeaBackground from '@/components/SeaBackground';
 import { useEffect, useState } from 'react';
 
 type ServerSnapshot = {
@@ -42,12 +43,10 @@ export default function PlayersPage() {
 
   return (
     <main className="relative min-h-screen overflow-hidden px-4 py-8 text-slate-100">
-      {/* Sea background animations */}
-      <div className="sea-bg pointer-events-none absolute inset-0 -z-10" />
-      
+      <SeaBackground />
       <Navbar />
 
-      <div className="mx-auto max-w-4xl rounded-3xl border border-cyan-400/30 bg-cyan-950/50 p-6 shadow-2xl shadow-cyan-900/30 backdrop-blur">
+      <div className="mx-auto max-w-4xl glass-card rounded-3xl p-6">
         <div className="mb-6 flex items-center justify-between">
           <div>
             <p className="text-sm uppercase tracking-[0.35em] text-cyan-300">Harbor Dashboard</p>
@@ -76,7 +75,7 @@ export default function PlayersPage() {
             {data.players.map((player, index) => (
               <div
                 key={index}
-                className="flex items-center gap-3 rounded-xl border border-cyan-400/30 bg-cyan-800/40 px-4 py-3"
+                className="glass-card flex items-center gap-3 rounded-xl px-4 py-3"
               >
                 <div className="flex h-10 w-10 items-center justify-center rounded-full bg-cyan-500/30 text-lg font-bold text-cyan-100">
                   {player.charAt(0).toUpperCase()}
