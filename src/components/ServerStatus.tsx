@@ -108,9 +108,9 @@ export function ServerStatus({ initialData }: { initialData: ServerSnapshot }) {
       </section>
 
       {/* Player List */}
-      {data.players && data.players.length > 0 && (
-        <section className="mt-6 rounded-2xl border border-cyan-300/20 bg-cyan-900/30 p-5">
-          <h2 className="text-lg font-semibold text-white">Players Online ({data.players.length})</h2>
+      <section className="mt-6 rounded-2xl border border-cyan-300/20 bg-cyan-900/30 p-5">
+        <h2 className="text-lg font-semibold text-white">Players Online ({data.players?.length || 0})</h2>
+        {data.players && data.players.length > 0 ? (
           <div className="mt-4 flex flex-wrap gap-2">
             {data.players.map((player, index) => (
               <span 
@@ -121,8 +121,10 @@ export function ServerStatus({ initialData }: { initialData: ServerSnapshot }) {
               </span>
             ))}
           </div>
-        </section>
-      )}
+        ) : (
+          <p className="mt-4 text-slate-400">No players online</p>
+        )}
+      </section>
 
       <section className="mt-6 grid gap-4 lg:grid-cols-3">
         <div className="rounded-2xl border border-cyan-300/20 bg-cyan-900/30 p-5">
