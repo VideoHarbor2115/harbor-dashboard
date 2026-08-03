@@ -101,7 +101,7 @@ export function ServerStatus({ initialData }: { initialData: ServerSnapshot }) {
       <section className="grid gap-4 md:grid-cols-2 xl:grid-cols-4">
         <StatCard label="Users" value={data.users ?? '—'} accent="cyan" />
         <StatCard label="IP address" value={data.ipAddress ?? '—'} accent="blue" />
-        <StatCard label="Bedrock port" value={data.port ?? '—'} accent="amber" />
+        <StatCard label="Bedrock port" value={data.port ?? '—'} accent="sky" />
         <StatCard label="Uptime" value={data.uptime ?? '—'} accent="emerald" />
       </section>
 
@@ -147,6 +147,7 @@ function StatCard({ label, value, accent }: { label: string; value: string; acce
   const accentMap: Record<string, string> = {
     cyan: 'border-cyan-300/40 bg-cyan-900/30 text-cyan-100',
     blue: 'border-sky-300/40 bg-sky-900/30 text-sky-100',
+    sky: 'border-sky-400/40 bg-sky-900/40 text-sky-100',
     amber: 'border-amber-300/40 bg-amber-900/30 text-amber-100',
     emerald: 'border-teal-300/40 bg-teal-900/30 text-teal-100',
   };
