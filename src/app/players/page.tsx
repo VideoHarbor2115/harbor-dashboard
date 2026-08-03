@@ -54,6 +54,7 @@ export default function PlayersPage() {
         <div className="flex gap-6">
           <Link href="/" className="text-slate-400 transition hover:text-cyan-300">Status</Link>
           <Link href="/players" className="text-cyan-300 transition hover:text-cyan-100">Players</Link>
+          <Link href="/rules" className="text-slate-400 transition hover:text-cyan-300">Rules</Link>
           <Link href="/vote" className="text-slate-400 transition hover:text-cyan-300">Vote</Link>
           <Link href="/social" className="text-slate-400 transition hover:text-cyan-300">Social</Link>
         </div>
@@ -105,7 +106,7 @@ export default function PlayersPage() {
               </svg>
             </div>
             <p className="mt-4 text-lg text-slate-300">No players online</p>
-            <p className="mt-1 text-sm text-slate-500">Check back later to see who's playing</p>
+            <p className="mt-1 text-sm text-slate-500">Check back later to see who is playing</p>
           </div>
         )}
 
