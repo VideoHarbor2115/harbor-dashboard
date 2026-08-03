@@ -95,6 +95,9 @@ export async function getServerStatus(): Promise<ServerSnapshot> {
     const data = (await response.json()) as McStatusResponse;
     const domain = process.env.SERVER_DOMAIN || data.host || host;
 
+    // mcstatus.io can return false positives - check if max players is 0 (server likely offline)
+    const isOnline = data.online && (data.players?.max ?? 0) > 0;
+    
     // Extract player names
     const playerList = data.players?.list?.map(p => p.name_clean || p.name_raw || 'Unknown').slice(0, 10) || [];
     const rawVersion = data.version?.name_clean || data.version?.name_raw || '—';
@@ -102,8 +105,8 @@ export async function getServerStatus(): Promise<ServerSnapshot> {
     const version = rawVersion === 'OFFLINE' ? '—' : rawVersion;
 
     return {
-      users: data.online && data.players?.online != null ? String(data.players.online) : '—',
-      status: data.online ? 'online' : 'offline',
+      users: isOnline && data.players?.online != null ? String(data.players.online) : '—',
+      status: isOnline ? 'online' : 'offline',
       ipAddress: data.ip_address || data.host || host,
       port: data.port ? String(data.port) : port,
       uptime: vmReport.uptime ?? '—',
