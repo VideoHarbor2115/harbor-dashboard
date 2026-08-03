@@ -97,7 +97,9 @@ export async function getServerStatus(): Promise<ServerSnapshot> {
 
     // Extract player names
     const playerList = data.players?.list?.map(p => p.name_clean || p.name_raw || 'Unknown').slice(0, 10) || [];
-    const version = data.version?.name_clean || data.version?.name_raw || '—';
+    const rawVersion = data.version?.name_clean || data.version?.name_raw || '—';
+    // Don't show "OFFLINE" as version - it's just the MOTD
+    const version = rawVersion === 'OFFLINE' ? '—' : rawVersion;
 
     return {
       users: data.online && data.players?.online != null ? String(data.players.online) : '—',
