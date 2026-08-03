@@ -16,6 +16,7 @@ export default function Vote() {
         </div>
         <div className="flex gap-6">
           <Link href="/" className="text-slate-400 transition hover:text-cyan-300">Status</Link>
+          <Link href="/players" className="text-slate-400 transition hover:text-cyan-300">Players</Link>
           <Link href="/vote" className="text-cyan-300 transition hover:text-cyan-100">Vote</Link>
           <Link href="/social" className="text-slate-400 transition hover:text-cyan-300">Social</Link>
         </div>
