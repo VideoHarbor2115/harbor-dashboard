@@ -86,14 +86,6 @@ export function ServerStatus({ initialData }: { initialData: ServerSnapshot }) {
         <span className="text-xs text-slate-400">
           {loading ? 'Refreshing...' : lastUpdated ? `Updated ${lastUpdated.toLocaleTimeString()}` : ''}
         </span>
-        {/* Logo in corner */}
-        <div>
-          <img
-            src="/logo.png"
-            alt="HarborMC"
-            className="h-14 w-14 rounded-xl shadow-lg shadow-cyan-500/20 animate-float"
-          />
-        </div>
       </div>
 
       <div className={`transition-all duration-500 ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'}`}>
