@@ -10,6 +10,8 @@ type ServerSnapshot = {
   uptime: string;
   ping: string;
   domain: string;
+  players: string[];
+  version: string;
 };
 
 export function ServerStatus({ initialData }: { initialData: ServerSnapshot }) {
@@ -105,11 +107,29 @@ export function ServerStatus({ initialData }: { initialData: ServerSnapshot }) {
         <StatCard label="Uptime" value={data.uptime ?? '—'} accent="emerald" />
       </section>
 
+      {/* Player List */}
+      {data.players && data.players.length > 0 && (
+        <section className="mt-6 rounded-2xl border border-cyan-300/20 bg-cyan-900/30 p-5">
+          <h2 className="text-lg font-semibold text-white">Players Online ({data.players.length})</h2>
+          <div className="mt-4 flex flex-wrap gap-2">
+            {data.players.map((player, index) => (
+              <span 
+                key={index}
+                className="rounded-full border border-cyan-400/30 bg-cyan-800/40 px-3 py-1 text-sm text-cyan-100"
+              >
+                {player}
+              </span>
+            ))}
+          </div>
+        </section>
+      )}
+
       <section className="mt-6 grid gap-4 lg:grid-cols-3">
         <div className="rounded-2xl border border-cyan-300/20 bg-cyan-900/30 p-5">
           <h2 className="text-lg font-semibold text-white">Server Overview</h2>
           <div className="mt-4 grid gap-3 sm:grid-cols-2">
             <InfoRow label="Domain" value={data.domain ?? '—'} />
+            <InfoRow label="Version" value={data.version ?? '—'} />
             <InfoRow label="Ping" value={data.ping ?? '—'} />
             <InfoRow label="Status" value={data.status ?? '—'} />
             <InfoRow label="Discord" value="Click to join" link="https://discord.gg/juNs35nM5z" />

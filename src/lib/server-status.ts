@@ -6,6 +6,8 @@ export type ServerSnapshot = {
   uptime: string;
   ping: string;
   domain: string;
+  players: string[];
+  version: string;
 };
 
 const fallbackSnapshot: ServerSnapshot = {
@@ -16,6 +18,8 @@ const fallbackSnapshot: ServerSnapshot = {
   uptime: '—',
   ping: '—',
   domain: '—',
+  players: [],
+  version: '—',
 };
 
 type McStatusResponse = {
@@ -23,8 +27,12 @@ type McStatusResponse = {
   host?: string;
   port?: number;
   ip_address?: string;
-  players?: { online?: number; max?: number };
-  version?: { name_clean?: string };
+  players?: { 
+    online?: number; 
+    max?: number;
+    list?: Array<{ name_clean?: string; name_raw?: string }>;
+  };
+  version?: { name_clean?: string; name_raw?: string };
   retrieved_at?: number;
 };
 
@@ -87,6 +95,10 @@ export async function getServerStatus(): Promise<ServerSnapshot> {
     const data = (await response.json()) as McStatusResponse;
     const domain = process.env.SERVER_DOMAIN || data.host || host;
 
+    // Extract player names
+    const playerList = data.players?.list?.map(p => p.name_clean || p.name_raw || 'Unknown').slice(0, 10) || [];
+    const version = data.version?.name_clean || data.version?.name_raw || '—';
+
     return {
       users: data.online && data.players?.online != null ? String(data.players.online) : '—',
       status: data.online ? 'online' : 'offline',
@@ -95,6 +107,8 @@ export async function getServerStatus(): Promise<ServerSnapshot> {
       uptime: vmReport.uptime ?? '—',
       ping: vmReport.ping ?? '—',
       domain,
+      players: playerList,
+      version,
     };
   } catch (error) {
     console.error('Status API integration error', error);
