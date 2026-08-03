@@ -1,6 +1,6 @@
 'use client';
 
-import Link from 'next/link';
+import Navbar from '@/components/Navbar';
 
 const SectionTitle = ({ children }: { children: React.ReactNode }) => (
   <h2 className="mt-10 mb-4 text-2xl font-bold text-cyan-300 border-b border-cyan-400/20 pb-2">{children}</h2>
@@ -19,20 +19,7 @@ export default function Rules() {
       {/* Sea background */}
       <div className="sea-bg pointer-events-none absolute inset-0 -z-10" />
 
-      {/* Navigation */}
-      <nav className="mb-8 flex items-center justify-between rounded-2xl border border-cyan-400/20 bg-cyan-950/40 px-6 py-3 backdrop-blur">
-        <div className="flex items-center gap-3">
-          <img src="/logo.png" alt="HarborMC" className="h-8 w-8 rounded-lg" />
-          <span className="text-lg font-bold text-white">HarborMC</span>
-        </div>
-        <div className="flex gap-6">
-          <Link href="/" className="text-slate-400 transition hover:text-cyan-300">Status</Link>
-          <Link href="/players" className="text-slate-400 transition hover:text-cyan-300">Players</Link>
-          <Link href="/rules" className="text-cyan-300 transition hover:text-cyan-100">Rules</Link>
-          <Link href="/vote" className="text-slate-400 transition hover:text-cyan-300">Vote</Link>
-          <Link href="/social" className="text-slate-400 transition hover:text-cyan-300">Social</Link>
-        </div>
-      </nav>
+      <Navbar />
 
       <div className="mx-auto max-w-3xl rounded-3xl border border-cyan-400/30 bg-cyan-950/50 p-8 shadow-2xl shadow-cyan-900/30 backdrop-blur">
         {/* Header */}
@@ -156,6 +143,14 @@ export default function Rules() {
           </p>
         </div>
       </div>
+      {/* Footer */}
+      <footer className="mt-12 text-center">
+        <div className="mx-auto max-w-2xl rounded-2xl border border-cyan-400/10 bg-cyan-950/30 px-6 py-3 backdrop-blur">
+          <p className="text-sm text-slate-400">
+            ⚓ <span className="text-cyan-300">HarborMC</span> &mdash; Fair winds and following seas, sailor!
+          </p>
+        </div>
+      </footer>
     </main>
   );
 }

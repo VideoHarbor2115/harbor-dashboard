@@ -101,10 +101,10 @@ export function ServerStatus({ initialData }: { initialData: ServerSnapshot }) {
       </div>
 
       <section className="grid gap-4 md:grid-cols-2 xl:grid-cols-4">
-        <StatCard label="Users" value={data.users ?? '—'} accent="cyan" />
-        <StatCard label="IP address" value={data.ipAddress ?? '—'} accent="blue" />
-        <StatCard label="Bedrock port" value={data.port ?? '—'} accent="sky" />
-        <StatCard label="Uptime" value={data.uptime ?? '—'} accent="emerald" />
+        <StatCard label="Players" value={data.users ?? '—'} accent="cyan" icon="👥" />
+        <StatCard label="IP address" value={data.ipAddress ?? '—'} accent="blue" icon="🌐" />
+        <StatCard label="Bedrock port" value={data.port ?? '—'} accent="sky" icon="🔌" />
+        <StatCard label="Uptime" value={data.uptime ?? '—'} accent="emerald" icon="⏱️" />
       </section>
 
       <section className="mt-6 grid gap-4 lg:grid-cols-3">
@@ -147,7 +147,7 @@ export function ServerStatus({ initialData }: { initialData: ServerSnapshot }) {
   );
 }
 
-function StatCard({ label, value, accent }: { label: string; value: string; accent: string }) {
+function StatCard({ label, value, accent, icon }: { label: string; value: string; accent: string; icon: string }) {
   const accentMap: Record<string, string> = {
     cyan: 'border-cyan-300/40 bg-cyan-900/30 text-cyan-100',
     blue: 'border-sky-300/40 bg-sky-900/30 text-sky-100',
@@ -157,8 +157,11 @@ function StatCard({ label, value, accent }: { label: string; value: string; acce
   };
 
   return (
-    <div className={`rounded-2xl border p-4 ${accentMap[accent]}`}>
-      <div className="text-sm text-cyan-200">{label}</div>
+    <div className={`rounded-2xl border p-4 ${accentMap[accent]} transition hover:scale-[1.02] hover:shadow-lg`}>
+      <div className="flex items-center gap-2 text-sm text-cyan-200">
+        <span>{icon}</span>
+        <span>{label}</span>
+      </div>
       <div className="mt-2 text-2xl font-bold text-white">{value}</div>
     </div>
   );
