@@ -36,7 +36,7 @@ export default function Map() {
             <div className="rounded-xl bg-slate-800/50 p-4">
               <div className="text-2xl mb-2">👤</div>
               <h3 className="font-semibold text-white">Player Locations</h3>
-              <p className="text-sm text-slate-400">See who's where in real-time</p>
+              <p className="text-sm text-slate-400">See who is where in real-time</p>
             </div>
             <div className="rounded-xl bg-slate-800/50 p-4">
               <div className="text-2xl mb-2">🧭</div>
