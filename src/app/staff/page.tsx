@@ -1,5 +1,6 @@
 'use client';
 
+import { useState, useEffect } from 'react';
 import Navbar from '@/components/Navbar';
 import SeaBackground from '@/components/SeaBackground';
 import { useServerStatus } from '@/components/ServerStatusContext';
@@ -7,7 +8,6 @@ import { useServerStatus } from '@/components/ServerStatusContext';
 interface StaffMember {
   name: string;
   role: string;
-  avatar?: string;
 }
 
 const staff: StaffMember[] = [
@@ -16,6 +16,20 @@ const staff: StaffMember[] = [
 
 export default function Staff() {
   const { isOnline } = useServerStatus();
+  const [onlinePlayers, setOnlinePlayers] = useState<string[]>([]);
+
+  useEffect(() => {
+    fetch('/api/server-info')
+      .then(res => res.json())
+      .then(data => {
+        if (data.players) {
+          setOnlinePlayers(data.players.map((p: { name: string }) => p.name));
+        }
+      })
+      .catch(() => {});
+  }, []);
+
+  const isPlayerOnline = (name: string) => onlinePlayers.includes(name);
 
   return (
     <main className="relative min-h-screen overflow-hidden px-4 py-8 text-slate-100">
@@ -29,8 +43,15 @@ export default function Staff() {
           {staff.map((member) => (
             <div key={member.name} className="glass-card rounded-2xl p-6">
               <div className="flex items-center gap-4">
-                <div className="h-16 w-16 rounded-full bg-gradient-to-br from-cyan-500 to-indigo-600 flex items-center justify-center text-2xl font-bold text-white">
-                  {member.name[0].toUpperCase()}
+                <div className="relative">
+                  <img
+                    src={`https://mc-heads.net/avatar/${member.name}/64`}
+                    alt={member.name}
+                    className="h-16 w-16 rounded-lg"
+                  />
+                  {isPlayerOnline(member.name) && (
+                    <span className="absolute -bottom-1 -right-1 h-4 w-4 rounded-full bg-green-500 border-2 border-slate-800"></span>
+                  )}
                 </div>
                 <div>
                   <h3 className="text-lg font-semibold text-white">{member.name}</h3>

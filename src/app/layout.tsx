@@ -14,6 +14,13 @@ export const metadata: Metadata = {
 export default function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) {
   return (
     <html lang="en">
+      <head>
+        <style>{`
+          .favicon {
+            border-radius: 8px;
+          }
+        `}</style>
+      </head>
       <body>
         <ServerStatusProvider>
           {children}
