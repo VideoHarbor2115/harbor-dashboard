@@ -23,6 +23,7 @@ const navGroups: NavGroup[] = [
       { href: '/rules', label: 'Rules', icon: '📜' },
       { href: '/vote', label: 'Vote', icon: '🗳️' },
       { href: '/social', label: 'Social', icon: '🌐' },
+      { href: '/contact', label: 'Contact', icon: '📧' },
     ],
   },
 ];
