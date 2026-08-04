@@ -2,16 +2,14 @@
 
 import Navbar from '@/components/Navbar';
 import SeaBackground from '@/components/SeaBackground';
+import { useServerStatus } from './ServerStatusContext';
 
-interface PageShellProps {
-  children: React.ReactNode;
-  isOffline?: boolean;
-}
+export default function PageShell({ children }: { children: React.ReactNode }) {
+  const { isOnline } = useServerStatus();
 
-export default function PageShell({ children, isOffline = false }: PageShellProps) {
   return (
     <main className="relative min-h-screen overflow-hidden px-4 pt-8 pb-4 text-slate-100 flex flex-col">
-      <SeaBackground isOffline={isOffline} />
+      <SeaBackground isOffline={!isOnline} />
       <Navbar />
       <div className="flex-1">{children}</div>
       {/* Footer */}

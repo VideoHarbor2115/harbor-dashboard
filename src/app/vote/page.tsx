@@ -2,11 +2,14 @@
 
 import Navbar from '@/components/Navbar';
 import SeaBackground from '@/components/SeaBackground';
+import { useServerStatus } from '@/components/ServerStatusContext';
 
 export default function Vote() {
+  const { isOnline } = useServerStatus();
+
   return (
     <main className="relative min-h-screen overflow-hidden px-4 py-8 text-slate-100">
-      <SeaBackground />
+      <SeaBackground isOffline={!isOnline} />
       <Navbar />
       
       <div className="mx-auto max-w-4xl">

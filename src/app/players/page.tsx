@@ -3,6 +3,7 @@
 import Navbar from '@/components/Navbar';
 import SeaBackground from '@/components/SeaBackground';
 import { useEffect, useState } from 'react';
+import { useServerStatus } from '@/components/ServerStatusContext';
 
 type ServerSnapshot = {
   users: string;
@@ -20,6 +21,7 @@ export default function PlayersPage() {
   const [data, setData] = useState<ServerSnapshot | null>(null);
   const [loading, setLoading] = useState(true);
   const [lastUpdated, setLastUpdated] = useState<Date | null>(null);
+  const { isOnline } = useServerStatus();
 
   const fetchStatus = async () => {
     setLoading(true);
@@ -43,7 +45,7 @@ export default function PlayersPage() {
 
   return (
     <main className="relative min-h-screen overflow-hidden px-4 py-8 text-slate-100">
-      <SeaBackground />
+      <SeaBackground isOffline={!isOnline} />
       <Navbar />
 
       <div className="mx-auto max-w-4xl glass-card rounded-3xl p-6">

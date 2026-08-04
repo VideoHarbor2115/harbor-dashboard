@@ -2,6 +2,7 @@
 
 import Navbar from '@/components/Navbar';
 import SeaBackground from '@/components/SeaBackground';
+import { useServerStatus } from '@/components/ServerStatusContext';
 
 const SectionTitle = ({ children }: { children: React.ReactNode }) => (
   <h2 className="mt-10 mb-4 text-2xl font-bold text-cyan-300 border-b border-cyan-400/20 pb-2">{children}</h2>
@@ -15,9 +16,11 @@ const SubSection = ({ emoji, title, children }: { emoji: string; title: string; 
 );
 
 export default function Rules() {
+  const { isOnline } = useServerStatus();
+
   return (
     <main className="relative min-h-screen overflow-hidden px-4 py-8 text-slate-100">
-      <SeaBackground />
+      <SeaBackground isOffline={!isOnline} />
 
       <Navbar />
 

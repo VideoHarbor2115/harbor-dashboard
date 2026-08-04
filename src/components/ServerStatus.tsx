@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from 'react';
 import DynamicFavicon from './DynamicFavicon';
+import { useServerStatus } from './ServerStatusContext';
 
 type ServerSnapshot = {
   users: string;
@@ -23,6 +24,7 @@ export function ServerStatus({ initialData }: { initialData: ServerSnapshot }) {
   const [isVisible, setIsVisible] = useState(false);
   const [copied, setCopied] = useState(false);
   const [playerHistory, setPlayerHistory] = useState<number[]>([]);
+  const { setIsOnline } = useServerStatus();
 
   const fetchStatus = async () => {
     setLoading(true);
@@ -31,6 +33,7 @@ export function ServerStatus({ initialData }: { initialData: ServerSnapshot }) {
       const newData = (await res.json()) as ServerSnapshot;
       setData(newData);
       setLastUpdated(new Date());
+      setIsOnline(newData.status === 'online');
       
       // Track player count history (keep last 12 readings = ~6 minutes)
       const currentPlayers = parseInt(newData.users) || 0;

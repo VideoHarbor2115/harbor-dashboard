@@ -1,5 +1,6 @@
 import type { Metadata } from 'next';
 import './globals.css';
+import { ServerStatusProvider } from '@/components/ServerStatusContext';
 
 export const metadata: Metadata = {
   title: 'HarborMC Dashboard',
@@ -13,7 +14,11 @@ export const metadata: Metadata = {
 export default function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) {
   return (
     <html lang="en">
-      <body>{children}</body>
+      <body>
+        <ServerStatusProvider>
+          {children}
+        </ServerStatusProvider>
+      </body>
     </html>
   );
 }
