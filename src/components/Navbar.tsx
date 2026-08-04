@@ -28,6 +28,7 @@ const navGroups: NavGroup[] = [
       { href: '/social', label: 'Social', icon: '🌐' },
       { href: '/contact', label: 'Contact', icon: '📧' },
       { href: '/ban-appeal', label: 'Appeal', icon: '⚖️' },
+      { href: '/extras', label: 'Extras', icon: '✨' },
     ],
   },
 ];
