@@ -8,6 +8,7 @@ export type ServerSnapshot = {
   domain: string;
   players: string[];
   version: string;
+  motd: string;
 };
 
 const fallbackSnapshot: ServerSnapshot = {
@@ -20,6 +21,7 @@ const fallbackSnapshot: ServerSnapshot = {
   domain: '—',
   players: [],
   version: '—',
+  motd: '—',
 };
 
 type McStatusResponse = {
@@ -33,6 +35,7 @@ type McStatusResponse = {
     list?: Array<{ name_clean?: string; name_raw?: string }>;
   };
   version?: { name_clean?: string; name_raw?: string };
+  motd?: { clean?: string; raw?: string };
   retrieved_at?: number;
 };
 
@@ -103,6 +106,8 @@ export async function getServerStatus(): Promise<ServerSnapshot> {
     const rawVersion = data.version?.name_clean || data.version?.name_raw || '—';
     // Don't show "OFFLINE" as version - it's just the MOTD
     const version = rawVersion === 'OFFLINE' ? '—' : rawVersion;
+    // Get MOTD (message of the day)
+    const motd = data.motd?.clean || data.motd?.raw || '—';
 
     return {
       users: isOnline && data.players?.online != null ? String(data.players.online) : '—',
@@ -114,6 +119,7 @@ export async function getServerStatus(): Promise<ServerSnapshot> {
       domain,
       players: playerList,
       version,
+      motd,
     };
   } catch (error) {
     console.error('Status API integration error', error);

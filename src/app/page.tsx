@@ -6,9 +6,10 @@ export const dynamic = 'force-dynamic';
 
 export default async function Home() {
   const data = await getServerStatus();
+  const isOffline = data.status !== 'online';
 
   return (
-    <PageShell>
+    <PageShell isOffline={isOffline}>
       <div className="mx-auto max-w-6xl">
         <ServerStatus initialData={data} />
       </div>

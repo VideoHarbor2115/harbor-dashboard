@@ -1,6 +1,7 @@
 'use client';
 
 import { useEffect, useState } from 'react';
+import DynamicFavicon from './DynamicFavicon';
 
 type ServerSnapshot = {
   users: string;
@@ -12,6 +13,7 @@ type ServerSnapshot = {
   domain: string;
   players: string[];
   version: string;
+  motd: string;
 };
 
 export function ServerStatus({ initialData }: { initialData: ServerSnapshot }) {
@@ -20,6 +22,7 @@ export function ServerStatus({ initialData }: { initialData: ServerSnapshot }) {
   const [lastUpdated, setLastUpdated] = useState<Date | null>(null);
   const [isVisible, setIsVisible] = useState(false);
   const [copied, setCopied] = useState(false);
+  const [playerHistory, setPlayerHistory] = useState<number[]>([]);
 
   const fetchStatus = async () => {
     setLoading(true);
@@ -28,6 +31,13 @@ export function ServerStatus({ initialData }: { initialData: ServerSnapshot }) {
       const newData = (await res.json()) as ServerSnapshot;
       setData(newData);
       setLastUpdated(new Date());
+      
+      // Track player count history (keep last 12 readings = ~6 minutes)
+      const currentPlayers = parseInt(newData.users) || 0;
+      setPlayerHistory(prev => {
+        const updated = [...prev, currentPlayers].slice(-12);
+        return updated;
+      });
     } catch (error) {
       console.error('Failed to fetch status:', error);
     } finally {
@@ -82,6 +92,7 @@ export function ServerStatus({ initialData }: { initialData: ServerSnapshot }) {
 
   return (
     <>
+      <DynamicFavicon isOnline={online} />
       <div className="mb-4 flex items-center justify-between">
         <span className="text-xs text-slate-400">
           {loading ? 'Refreshing...' : lastUpdated ? `Updated ${lastUpdated.toLocaleTimeString()}` : ''}
@@ -154,6 +165,64 @@ export function ServerStatus({ initialData }: { initialData: ServerSnapshot }) {
           <StatCard label="Uptime" value={data.uptime ?? '—'} accent="emerald" icon="⏱️" />
         </section>
 
+        {/* ============ PLAYER HISTORY SPARKLINE ============ */}
+        {online && playerHistory.length > 1 && (
+          <section className="mt-4 glass-card rounded-xl p-4">
+            <div className="flex items-center justify-between">
+              <span className="text-sm text-cyan-300">Player Activity (last 6 min)</span>
+              <div className="sparkline">
+                {playerHistory.map((count, i) => {
+                  const max = Math.max(...playerHistory, 1);
+                  const height = Math.max(4, (count / max) * 28);
+                  return (
+                    <div
+                      key={i}
+                      className={`spark-bar ${i === playerHistory.length - 1 ? 'current' : ''}`}
+                      style={{ height: `${height}px` }}
+                      title={`${count} players`}
+                    />
+                  );
+                })}
+              </div>
+            </div>
+          </section>
+        )}
+
+        {/* ============ PLAYERS PREVIEW ============ */}
+        {online && data.players && data.players.length > 0 && (
+          <section className="mt-6 glass-card rounded-2xl p-5">
+            <div className="flex items-center justify-between">
+              <h2 className="text-lg font-semibold text-white">Players Online</h2>
+              <a href="/players" className="text-sm text-cyan-300 hover:text-cyan-200 transition">
+                View all →
+              </a>
+            </div>
+            <div className="mt-4 flex flex-wrap gap-3">
+              {data.players.slice(0, 8).map((player, index) => (
+                <a
+                  key={index}
+                  href={`https://namemc.com/profile/${player}`}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="group flex items-center gap-2 rounded-xl border border-cyan-400/20 bg-cyan-900/30 px-3 py-2 transition hover:bg-cyan-800/40 hover:border-cyan-400/40"
+                >
+                  <img
+                    src={`https://minotar.net/helm/${encodeURIComponent(player)}/24.png`}
+                    alt={player}
+                    className="h-6 w-6 rounded-sm"
+                  />
+                  <span className="text-sm text-cyan-100 group-hover:text-cyan-200">{player}</span>
+                </a>
+              ))}
+              {data.players.length > 8 && (
+                <div className="flex items-center rounded-xl border border-cyan-400/20 bg-cyan-900/30 px-3 py-2 text-sm text-cyan-300">
+                  +{data.players.length - 8} more
+                </div>
+              )}
+            </div>
+          </section>
+        )}
+
         {/* ============ DETAILS ============ */}
         <section className="mt-6 grid gap-4 lg:grid-cols-3">
           <div className="glass-card rounded-2xl p-5">
@@ -164,6 +233,7 @@ export function ServerStatus({ initialData }: { initialData: ServerSnapshot }) {
               <InfoRow label="Ping" value={data.ping ?? '—'} />
               <InfoRow label="Status" value={data.status ?? '—'} />
               <InfoRow label="Discord" value="Click to join" link="https://discord.gg/juNs35nM5z" />
+              <InfoRow label="MOTD" value={data.motd ?? '—'} />
             </div>
           </div>
 
