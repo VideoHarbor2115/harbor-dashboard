@@ -15,11 +15,23 @@ export default function BanAppeal() {
     appeal: '',
   });
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    // In production, this would send to a backend or Discord webhook
-    console.log('Ban appeal submitted:', formData);
-    setSubmitted(true);
+    try {
+      const res = await fetch('/api/ban-appeal', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(formData),
+      });
+      if (res.ok) {
+        setSubmitted(true);
+      } else {
+        alert('Failed to submit appeal. Please try again or contact us on Discord.');
+      }
+    } catch (error) {
+      console.error('Submit error:', error);
+      alert('Failed to submit appeal. Please try again or contact us on Discord.');
+    }
   };
 
   if (submitted) {

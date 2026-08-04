@@ -15,7 +15,6 @@ const navGroups: NavGroup[] = [
     items: [
       { href: '/', label: 'Status', icon: '📡' },
       { href: '/players', label: 'Players', icon: '👥' },
-      { href: '/map', label: 'Map', icon: '🗺️' },
     ],
   },
   {
