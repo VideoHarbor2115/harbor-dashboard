@@ -23,7 +23,6 @@ export default function Social() {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    // Fetch Discord widget data
     fetch('https://discord.com/api/guilds/juNs35nM5z/widget.json')
       .then(res => res.json())
       .then(data => {
@@ -84,7 +83,6 @@ export default function Social() {
             </a>
           )}
           
-          {/* Online Members */}
           {widget && widget.members && widget.members.length > 0 && (
             <div className="mt-4">
               <p className="text-sm text-slate-400 mb-2">Online Members</p>
@@ -180,50 +178,6 @@ export default function Social() {
           </div>
         </div>
       </div>
-    </main>
-  );
-} 
-            href="#" 
-            target="_blank" 
-            rel="noopener noreferrer"
-            className="group glass-card rounded-2xl p-6"
-          >
-            <div className="text-3xl mb-3">▶️</div>
-            <h2 className="text-xl font-semibold text-white group-hover:text-red-200 transition">YouTube</h2>
-            <p className="mt-2 text-red-200">Subscribe to our channel</p>
-          </a>
-          
-          <a 
-            href="#" 
-            target="_blank" 
-            rel="noopener noreferrer"
-            className="group glass-card rounded-2xl p-6"
-          >
-            <div className="text-3xl mb-3">🐦</div>
-            <h2 className="text-xl font-semibold text-white group-hover:text-sky-200 transition">Twitter / X</h2>
-            <p className="mt-2 text-sky-200">Follow us for updates</p>
-          </a>
-          
-          <a 
-            href="#" 
-            target="_blank" 
-            rel="noopener noreferrer"
-            className="group glass-card rounded-2xl p-6"
-          >
-            <div className="text-3xl mb-3">📸</div>
-            <h2 className="text-xl font-semibold text-white group-hover:text-pink-200 transition">Instagram</h2>
-            <p className="mt-2 text-pink-200">See our latest posts</p>
-          </a>
-        </div>
-      </div>
-      {/* Footer */}
-      <footer className="mt-12 text-center">
-        <div className="mx-auto max-w-2xl rounded-2xl border border-cyan-400/10 bg-cyan-950/30 px-6 py-3 backdrop-blur">
-          <p className="text-sm text-slate-400">
-            ⚓ <span className="text-cyan-300">HarborMC</span> &mdash; Fair winds and following seas, sailor!
-          </p>
-        </div>
-      </footer>
     </main>
   );
 }
