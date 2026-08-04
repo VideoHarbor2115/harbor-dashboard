@@ -15,6 +15,7 @@ const navGroups: NavGroup[] = [
     items: [
       { href: '/', label: 'Status', icon: '📡' },
       { href: '/players', label: 'Players', icon: '👥' },
+      { href: '/map', label: 'Map', icon: '🗺️' },
     ],
   },
   {
@@ -24,6 +25,7 @@ const navGroups: NavGroup[] = [
       { href: '/vote', label: 'Vote', icon: '🗳️' },
       { href: '/social', label: 'Social', icon: '🌐' },
       { href: '/contact', label: 'Contact', icon: '📧' },
+      { href: '/ban-appeal', label: 'Appeal', icon: '⚖️' },
     ],
   },
 ];
