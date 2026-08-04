@@ -69,6 +69,10 @@ export function ServerStatus({ initialData }: { initialData: ServerSnapshot }) {
 
   const online = data.status === 'online';
 
+  // Staff list to check against
+  const STAFF_NAMES = ['CaptainHarbor', 'FirstMate', 'Quartermaster', 'Shipwright', 'Navigator', 'Bosun', 'CabinBoy'];
+  const staffOnline = online && data.players ? data.players.filter(p => STAFF_NAMES.some(staff => p.toLowerCase().includes(staff.toLowerCase()))) : [];
+
   // Loading screen
   if (loading && !lastUpdated) {
     return (
@@ -219,6 +223,34 @@ export function ServerStatus({ initialData }: { initialData: ServerSnapshot }) {
                   +{data.players.length - 8} more
                 </div>
               )}
+            </div>
+          </section>
+        )}
+
+        {/* ============ STAFF ONLINE ============ */}
+        {staffOnline.length > 0 && (
+          <section className="mt-4 glass-card rounded-2xl p-5 border-amber-400/30">
+            <div className="flex items-center gap-2">
+              <span className="text-lg">⚖️</span>
+              <h2 className="text-lg font-semibold text-white">Staff Online</h2>
+            </div>
+            <div className="mt-3 flex flex-wrap gap-3">
+              {staffOnline.map((player, index) => (
+                <a
+                  key={index}
+                  href={`https://namemc.com/profile/${player}`}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="group flex items-center gap-2 rounded-xl border border-amber-400/30 bg-amber-900/20 px-3 py-2 transition hover:bg-amber-800/30 hover:border-amber-400/50"
+                >
+                  <img
+                    src={`https://minotar.net/helm/${encodeURIComponent(player)}/24.png`}
+                    alt={player}
+                    className="h-6 w-6 rounded-sm"
+                  />
+                  <span className="text-sm text-amber-200 group-hover:text-amber-100">{player}</span>
+                </a>
+              ))}
             </div>
           </section>
         )}
