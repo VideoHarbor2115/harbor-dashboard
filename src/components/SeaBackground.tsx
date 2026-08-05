@@ -1,18 +1,33 @@
 // Deep-sea animated background layers — lighthouse beacon, light rays, bubbles, mist, waves, storm.
+import { useState } from 'react';
+
 interface SeaBackgroundProps {
   isOffline?: boolean;
 }
 
 export default function SeaBackground({ isOffline = false }: SeaBackgroundProps) {
-  const bubbles = [
-    { left: '8%',  size: 10, duration: 11, delay: 0 },
-    { left: '22%', size: 6,  duration: 9,  delay: 2 },
-    { left: '37%', size: 14, duration: 13, delay: 4 },
-    { left: '52%', size: 8,  duration: 10, delay: 1 },
-    { left: '66%', size: 12, duration: 14, delay: 6 },
-    { left: '78%', size: 7,  duration: 9,  delay: 3 },
-    { left: '91%', size: 11, duration: 12, delay: 5 },
-  ];
+  const [poppedBubbles, setPoppedBubbles] = useState<Set<number>>(new Set());
+  const [bubbles, setBubbles] = useState([
+    { left: '8%',  size: 24, duration: 11, delay: 0 },
+    { left: '22%', size: 18, duration: 9,  delay: 2 },
+    { left: '37%', size: 32, duration: 13, delay: 4 },
+    { left: '52%', size: 20, duration: 10, delay: 1 },
+    { left: '66%', size: 28, duration: 14, delay: 6 },
+    { left: '78%', size: 16, duration: 9,  delay: 3 },
+    { left: '91%', size: 26, duration: 12, delay: 5 },
+  ]);
+
+  const popBubble = (index: number) => {
+    setPoppedBubbles(prev => new Set(prev).add(index));
+    // Respawn bubble after delay
+    setTimeout(() => {
+      setPoppedBubbles(prev => {
+        const next = new Set(prev);
+        next.delete(index);
+        return next;
+      });
+    }, 2000);
+  };
 
   // Generate rain drops
   const rainDrops = Array.from({ length: 60 }, (_, i) => ({
@@ -22,7 +37,7 @@ export default function SeaBackground({ isOffline = false }: SeaBackgroundProps)
   }));
 
   return (
-    <div className={`pointer-events-none absolute inset-0 -z-10 overflow-hidden ${isOffline ? 'storm-active' : ''}`}>
+    <div className={`absolute inset-0 -z-10 overflow-hidden ${isOffline ? 'storm-active' : ''}`}>
       {/* Lighthouse beacon (hide when offline) */}
       {!isOffline && <div className="beacon" />}
 
@@ -32,9 +47,12 @@ export default function SeaBackground({ isOffline = false }: SeaBackgroundProps)
       {/* Floating bubbles (fewer when offline) */}
       <div className="bubbles">
         {bubbles.filter((_, i) => isOffline ? i % 2 === 0 : true).map((b, i) => (
-          <span
+          <button
             key={i}
-            className="bubble"
+            type="button"
+            aria-label="Pop bubble"
+            className={`bubble ${poppedBubbles.has(i) ? 'popped' : ''}`}
+            onClick={() => popBubble(i)}
             style={{
               left: b.left,
               width: b.size,
